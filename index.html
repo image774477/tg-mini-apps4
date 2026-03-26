@@ -330,11 +330,11 @@ ul{margin:0;padding-left:1.1rem;display:grid;gap:4px}
 <div id="winModal" aria-hidden="true">
   <div class="winCard">
     <h3>Платина закрыта!</h3>
-    <img id="winBadge" class="winBadge" src="Ачивка которая в конце дается.png" alt="Ачивка за прохождение платины Life is Strange: Reunion">
+    <img id="winBadge" class="winBadge" src="Ачивка которая в конце дается2.png" alt="Ачивка за прохождение платины Life is Strange: Reunion">
     <small class="winNote">Ваша карточка прохождения</small>
     <p>Все фазы маршрута отмечены. Значит, дорожная карта пройдена до конца и профиль дочищен без лишней путаницы.</p>
     <div class="winActions">
-      <a id="winDownload" href="#" download="Ачивка которая в конце дается.png">Скачать ачивку</a>
+      <a id="winDownload" href="#" download="Ачивка которая в конце дается2.png">Скачать ачивку</a>
       <button id="winClose" type="button">Закрыть</button>
     </div>
   </div>
@@ -418,8 +418,8 @@ wasAllDone=allDone();
 inputs.forEach(i=>i.addEventListener('change',()=>{const k=i.dataset.k;const v=i.checked;(groups[k]||[]).forEach(x=>x.checked=v);save()}));
 if(rst)rst.addEventListener('click',()=>{keys.forEach(k=>(groups[k]||[]).forEach(i=>i.checked=false));save()});
 
-const badgeFileName='Ачивка которая в конце дается.png';
-const badgeDownloadPath='Ачивка которая в конце дается.png';
+const badgeFileName='Ачивка которая в конце дается2.png';
+const badgeDownloadPath='Ачивка которая в конце дается2.png';
 const badgeAssetUrl=badgeDownloadPath+'?v='+Date.now();
 const tgPlatform=String((tg&&tg.platform)||'').toLowerCase();
 const isMobileTelegram=tgPlatform==='android'||tgPlatform==='ios'||/android|iphone|ipad|ipod/i.test(navigator.userAgent);
