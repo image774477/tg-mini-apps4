@@ -420,6 +420,7 @@ if(rst)rst.addEventListener('click',()=>{keys.forEach(k=>(groups[k]||[]).forEach
 
 const badgeFileName='Ачивка которая в конце дается.png';
 const badgeDownloadPath='Ачивка которая в конце дается.png';
+const badgeAssetUrl=badgeDownloadPath+'?v='+Date.now();
 const tgPlatform=String((tg&&tg.platform)||'').toLowerCase();
 const isMobileTelegram=tgPlatform==='android'||tgPlatform==='ios'||/android|iphone|ipad|ipod/i.test(navigator.userAgent);
 const toAbsUrl=u=>{try{return new URL(u,window.location.href).href}catch(e){return u}};
@@ -436,12 +437,12 @@ const triggerBlobDownload=async(url,name)=>{
   a.remove();
   setTimeout(()=>URL.revokeObjectURL(blobUrl),1200);
 };
-if(winBadge)winBadge.src=badgeDownloadPath;
+if(winBadge)winBadge.src=badgeAssetUrl;
 if(winDownload){
   winDownload.setAttribute('download',badgeFileName);
   winDownload.addEventListener('click',async e=>{
     e.preventDefault();
-    const absUrl=toAbsUrl(badgeDownloadPath);
+    const absUrl=toAbsUrl(badgeAssetUrl);
     try{
       if(isMobileTelegram&&tg&&typeof tg.openLink==='function'){tg.openLink(absUrl,{try_instant_view:false});return}
       await triggerBlobDownload(absUrl,badgeFileName);
