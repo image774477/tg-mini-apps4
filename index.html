@@ -1,0 +1,466 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Life is Strange: Reunion - Road to Platinum</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Cormorant+Garamond:wght@500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e1119;--tx:#f7f0e8;--mut:#bdaea8;--ac:#f08e77;--ac2:#86c6d2;--btn-tx:#251e22;--lnk:#bfe8f1;--card:rgba(255,255,255,.08);--bd:rgba(255,246,233,.16);--paper:#f3e6d8;--paper-ink:#282431;--paper-line:rgba(77,55,39,.16);--shadow:0 28px 70px rgba(0,0,0,.36)}
+*{box-sizing:border-box}html,body{margin:0;padding:0;scroll-behavior:smooth}
+body{position:relative;overflow-x:hidden;font-family:"Space Grotesk","Segoe UI",sans-serif;color:var(--tx);background:
+radial-gradient(880px 540px at 12% -8%,rgba(240,142,119,.18),transparent 62%),
+radial-gradient(900px 660px at 104% 10%,rgba(134,198,210,.14),transparent 56%),
+radial-gradient(760px 480px at 50% 110%,rgba(255,228,197,.07),transparent 58%),
+linear-gradient(180deg,#121625 0%,#0d1018 100%);
+line-height:1.55;padding:0 0 max(16px,env(safe-area-inset-bottom))}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background:
+repeating-linear-gradient(0deg,transparent 0 2px,rgba(255,255,255,.012) 2px 3px),
+repeating-linear-gradient(90deg,transparent 0 3px,rgba(255,255,255,.008) 3px 4px);
+mix-blend-mode:soft-light}
+body:after{content:"";position:fixed;inset:-20%;pointer-events:none;opacity:.16;background:
+radial-gradient(circle at 20% 20%,rgba(255,206,154,.2),transparent 18%),
+radial-gradient(circle at 82% 16%,rgba(128,191,205,.16),transparent 20%),
+radial-gradient(circle at 50% 82%,rgba(255,161,125,.12),transparent 22%)}
+.wrap{width:min(1220px,100% - 24px);margin:0 auto;padding-top:18px}
+.scene{min-height:86vh;display:flex;align-items:center;scroll-margin-top:72px;opacity:.42;transform:translateY(18px) scale(.992);transition:.42s}
+.scene.show{opacity:.92;transform:none}.scene.active{opacity:1}
+article{display:grid;gap:28px}
+.hero{position:relative;padding:42px 32px 48px;display:grid;gap:14px;align-content:end;border:1px solid rgba(255,248,236,.14);border-radius:30px;background:
+linear-gradient(180deg,rgba(26,29,42,.88),rgba(14,16,23,.94)),
+radial-gradient(circle at top left,rgba(255,255,255,.06),transparent 32%);
+box-shadow:var(--shadow);overflow:hidden}
+.hero:before{content:"";position:absolute;top:28px;right:42px;width:286px;height:356px;border-radius:20px;background:rgba(255,255,255,.05);transform:rotate(9deg);box-shadow:0 18px 40px rgba(0,0,0,.24)}
+.hero:after{content:"";position:absolute;left:-40px;bottom:-60px;width:320px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(240,142,119,.22),transparent 68%)}
+.hero .stats:before{content:"";position:absolute;right:164px;top:14px;width:104px;height:24px;border-radius:7px;background:rgba(243,230,216,.12);transform:rotate(-7deg);border:1px solid rgba(255,248,236,.08)}
+.hero>*{position:relative;z-index:1}
+.heroArt{position:absolute;top:10px;right:18px;width:min(34vw,320px);max-width:42%;aspect-ratio:1/1;object-fit:cover;border:14px solid #f4e7d8;border-bottom-width:52px;border-radius:18px;transform:rotate(8deg);box-shadow:0 28px 48px rgba(0,0,0,.34);z-index:0;pointer-events:none;filter:saturate(1.02) contrast(1.04)}
+.kicker{display:inline-block;width:max-content;padding:.38rem .88rem;border:1px dashed rgba(255,236,214,.24);border-radius:999px;background:rgba(243,230,216,.08);font-family:"Space Grotesk","Segoe UI",sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:#f0d8c7}
+h1,h2,h3{margin:0;line-height:1.06}
+h1{font-family:"Cormorant Garamond",serif;font-size:clamp(2.5rem,4.7vw,5rem);font-weight:700;letter-spacing:-.03em;max-width:18ch;text-wrap:normal}
+p{margin:.2rem 0 .9rem;color:color-mix(in srgb,var(--tx) 90%,var(--mut))}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.st{position:relative;border:1px solid rgba(96,67,45,.14);border-radius:16px;background:linear-gradient(180deg,#f2e4d4,#dec8b5);padding:.82rem .9rem;box-shadow:0 10px 24px rgba(0,0,0,.14);color:var(--paper-ink)}
+.st:nth-child(1){transform:rotate(-1.2deg)}
+.st:nth-child(2){transform:translateY(8px)}
+.st:nth-child(3){transform:rotate(1.1deg)}
+.st:nth-child(4){transform:translateY(4px) rotate(-.7deg)}
+.st b{display:block;font-size:1.34rem}
+.st span{font-size:.82rem;color:#73645d}
+.warn{position:relative;border:1px solid rgba(255,233,208,.18);border-left:4px solid var(--ac);background:linear-gradient(135deg,rgba(243,230,216,.11),rgba(243,230,216,.04));border-radius:16px;padding:.9rem 1rem;box-shadow:0 14px 30px rgba(0,0,0,.14)}
+.layout{display:grid;grid-template-columns:minmax(280px,340px) 1fr;gap:22px;align-items:start}
+#mpeek{display:none;position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom) + 8px);z-index:120;border:1px solid rgba(255,248,236,.14);border-radius:16px;background:linear-gradient(180deg,rgba(21,24,35,.96),rgba(14,16,22,.98));box-shadow:0 18px 38px rgba(0,0,0,.42);padding:.54rem .68rem;opacity:0;transform:translateY(12px) scale(.985);pointer-events:none;transition:opacity .22s ease,transform .22s ease}
+#mpeek.show{opacity:1;transform:translateY(0) scale(1)}
+.mpeek-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.2rem}
+.mpeek-top small{color:#f0d8c7;font-family:"Space Grotesk","Segoe UI",sans-serif;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase}
+.mpeek-top b{font-size:.82rem;color:var(--tx)}
+.mpeek-title{font-size:.9rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mpbar{height:6px;border-radius:999px;background:rgba(255,255,255,.18);overflow:hidden;margin-top:.35rem}
+.mpfill{height:100%;width:0;background:linear-gradient(90deg,#ff8f5d,#ffd275,#8fe2ff);transition:width .32s}
+#hud{position:sticky;top:max(8px,env(safe-area-inset-top));border:1px solid rgba(96,67,45,.14);border-radius:24px;background:
+linear-gradient(180deg,#efe1d0,#d8c2ad);
+padding:1rem;backdrop-filter:blur(12px);box-shadow:var(--shadow);overflow:hidden;color:var(--paper-ink)}
+#hud:before{content:"";position:absolute;top:16px;right:18px;width:92px;height:24px;border-radius:7px;background:rgba(243,230,216,.09);transform:rotate(7deg);border:1px solid rgba(255,248,236,.08)}
+#hud small{position:relative;color:#7f5a46;font-family:"Space Grotesk","Segoe UI",sans-serif;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+#hud h3{font-family:"Space Grotesk","Segoe UI",sans-serif;font-size:1.08rem;letter-spacing:-.01em;margin:.16rem 0 .45rem;color:var(--paper-ink)}
+#hud p{color:#4f4447}
+.meta{display:grid;gap:8px;margin:.65rem 0}.meta div{border:1px solid rgba(96,67,45,.12);border-radius:14px;background:rgba(255,255,255,.24);padding:.55rem .6rem;font-size:.85rem}
+.meta b{display:block;color:#8a6f63;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.06rem}
+.bar{position:relative;height:10px;border-radius:999px;overflow:hidden;background:color-mix(in srgb,var(--tx) 14%,transparent);border:1px solid color-mix(in srgb,var(--tx) 26%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--tx) 10%,transparent)}
+.bar:before{content:"";position:absolute;inset:0;z-index:0;opacity:.02;background:repeating-linear-gradient(135deg,transparent 0 10px,color-mix(in srgb,var(--tx) 5%,transparent) 10px 20px)}
+.bar.empty{border-style:solid;border-color:color-mix(in srgb,var(--tx) 24%,transparent);background:color-mix(in srgb,var(--tx) 12%,transparent)}
+.bar.empty:before{opacity:.12}
+.fill{position:relative;z-index:1;height:100%;width:0;background:linear-gradient(90deg,#ff8f5d,#ffd275,#8fe2ff);transition:width .32s}
+.row{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:#6f615b;margin:.55rem 0}
+.ring{--a:0deg;position:relative;width:96px;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;margin:.9rem 0;background:conic-gradient(#f08e77 var(--a),rgba(255,247,233,.14) 0);box-shadow:inset 0 0 0 1px rgba(255,248,236,.18),0 10px 26px rgba(0,0,0,.2)}
+.ring.empty{background:conic-gradient(rgba(255,248,236,.18) 1turn,rgba(255,248,236,.18) 1turn);border:2px dashed rgba(255,248,236,.24);box-shadow:inset 0 0 0 10px rgba(255,248,236,.08),0 10px 26px rgba(0,0,0,.2)}
+.ring:before{content:"";width:70px;aspect-ratio:1;border-radius:50%;background:linear-gradient(180deg,#f6e7d7,#dec7b3);border:1px solid rgba(96,67,45,.16)}
+.ring span{position:absolute;font-size:.73rem;font-weight:700;color:#2b2731}
+#timeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:.7rem 0}
+#timeline button{border:1px solid rgba(255,248,236,.14);border-radius:13px;background:linear-gradient(180deg,#1b1f2d,#121521);color:var(--mut);font:700 .7rem/1 "Space Grotesk",sans-serif;min-height:40px;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+#timeline button.on{background:linear-gradient(180deg,#f6d3b4,#f08e77);color:#231624;border-color:transparent}
+#hlist{margin:.2rem 0 0;padding:0;list-style:none;display:grid;gap:6px}
+#hlist li{padding-left:15px;position:relative;font-size:.84rem;color:#2d2930}
+#hlist li:before{content:"◆";position:absolute;left:0;top:1px;font-size:.62rem;color:var(--ac)}
+.card{position:relative;overflow:hidden;width:100%;border:1px solid rgba(96,67,45,.14);border-radius:28px;background:
+linear-gradient(180deg,#f4e8da,#e2cfbc);
+padding:clamp(18px,2.4vw,26px);box-shadow:var(--shadow);color:var(--paper-ink)}
+.card:before{content:"";position:absolute;top:18px;right:28px;width:92px;height:22px;border-radius:6px;background:rgba(243,230,216,.1);transform:rotate(7deg);border:1px solid rgba(255,248,236,.08)}
+.card:after{content:"";position:absolute;inset:12px;border-radius:22px;border:1px solid rgba(92,68,49,.08);pointer-events:none;background:
+repeating-linear-gradient(180deg,transparent 0 30px,rgba(92,68,49,.025) 30px 31px)}
+.card h2{font-family:"Space Grotesk","Segoe UI",sans-serif;font-weight:700;font-size:clamp(1.45rem,2.3vw,2rem);letter-spacing:-.01em;margin-bottom:.52rem}
+.card p,.card li,.card ul,.card .chkHint,.card .chkhead,.card .phaseChkHead b,.card .pdfAccBody p{color:#2f2930}
+.card .todo .ph{color:#7f5a46}
+.card .warn{background:rgba(255,255,255,.4)}
+article>.scene:nth-of-type(2n) .card{background:linear-gradient(180deg,#e6dde0,#d4c6cc)}
+article>.scene:nth-of-type(3n) .card{background:linear-gradient(180deg,#e5e9ea,#d3dade)}
+article>.scene:nth-of-type(4n) .card{background:linear-gradient(180deg,#efe1d0,#dcc4b0)}
+article>.scene:nth-of-type(2n) .card:before{background:rgba(178,138,147,.18)}
+article>.scene:nth-of-type(3n) .card:before{background:rgba(132,173,184,.18)}
+article>.scene:nth-of-type(4n) .card:before{background:rgba(214,173,119,.18)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:.9rem 0}
+.tags span{border:1px solid rgba(96,67,45,.16);border-radius:999px;padding:.24rem .68rem;background:linear-gradient(180deg,#f1dfcc,#dbc6b2);font-size:.76rem;color:var(--paper-ink);box-shadow:0 6px 14px rgba(0,0,0,.08)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ul{margin:0;padding-left:1.1rem;display:grid;gap:4px}
+.nodes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.node{border:1px solid rgba(96,67,45,.14);border-radius:18px;padding:.8rem .78rem;background:linear-gradient(180deg,#faf1e7,#ead8c7);box-shadow:0 16px 32px rgba(0,0,0,.12)}
+.node:nth-child(3n+1){transform:rotate(-1.1deg)}
+.node:nth-child(3n+2){transform:translateY(8px)}
+.node:nth-child(3n+3){transform:rotate(.9deg)}
+.node h4{margin:0 0 .28rem;color:#4e3340;font-family:"Space Grotesk","Segoe UI",sans-serif;font-size:.98rem;font-weight:700}
+.node p{margin:0;font-size:.82rem;color:#3a3138}
+.splits{list-style:none;padding:0;margin:0;display:grid;gap:9px}
+.splits li{border:1px solid rgba(96,67,45,.12);border-radius:14px;padding:.58rem .68rem;background:rgba(255,255,255,.32);font-size:.85rem}
+.splits li time{font-weight:700;color:#8b5d4a;margin-right:.5rem;font-variant-numeric:tabular-nums}
+.code{border:1px dashed rgba(96,67,45,.24);border-radius:14px;padding:.72rem .8rem;background:rgba(255,255,255,.32);font-size:.84rem;box-shadow:inset 0 0 0 1px rgba(255,255,255,.24)}
+.phaseChk{margin-top:.96rem;border:1px solid rgba(96,67,45,.12);border-radius:18px;padding:.9rem;background:rgba(255,255,255,.26);box-shadow:0 18px 40px rgba(0,0,0,.08)}
+.phaseChkHead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:.45rem}
+.phaseChkHead span{font-size:.78rem;letter-spacing:.08em;color:#8b5d4a;font-family:"Space Grotesk","Segoe UI",sans-serif;font-weight:700;text-transform:uppercase}
+.phaseChkHead b{font-size:.8rem;color:#3a3138}
+.phaseTodo{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.phaseTodo label{display:grid;grid-template-columns:auto 1fr;gap:.6rem;align-items:start;border:1px solid rgba(96,67,45,.12);border-radius:14px;padding:.54rem .62rem;background:rgba(255,255,255,.42);font-size:.87rem;font-weight:500}
+.phaseTodo input{margin-top:.18rem;accent-color:var(--ac)}
+.chk{border:1px solid rgba(96,67,45,.14);border-radius:24px;padding:1rem;background:linear-gradient(180deg,#f0dfcf,#dbc7b3);margin-top:1rem;box-shadow:0 24px 48px rgba(0,0,0,.12);color:var(--paper-ink)}
+.chkhead{display:flex;justify-content:space-between;align-items:center;color:#6f615b;font-size:.84rem;margin-bottom:.55rem}
+.chkHint{margin:.12rem 0 .65rem;color:#53484e;font-size:.84rem}
+.todo{margin:0;padding:0;list-style:none;display:grid;gap:7px}
+.todo label{display:grid;grid-template-columns:auto 1fr;gap:.5rem;align-items:start;border:1px solid rgba(96,67,45,.12);border-radius:12px;padding:.46rem .56rem;background:rgba(255,255,255,.42);font-size:.84rem}
+.todo input{margin-top:.17rem;accent-color:var(--ac)}
+.todo-all label{background:rgba(255,255,255,.06)}
+.todo .ph{display:block;color:var(--lnk);font-size:.72rem;letter-spacing:.05em;margin-top:.12rem}
+.phaseDeep{margin-top:1rem;border:1px dashed rgba(96,67,45,.16);border-radius:18px;background:rgba(255,255,255,.18);padding:.72rem}
+.phaseDeep h3{margin:.05rem 0 .65rem;font-family:"Space Grotesk","Segoe UI",sans-serif;font-size:.92rem;font-weight:700;color:#7f5a46;text-transform:uppercase;letter-spacing:.08em}
+.pdfAcc{border:1px solid rgba(96,67,45,.12);border-radius:16px;background:rgba(255,255,255,.34)}
+.pdfAcc+.pdfAcc{margin-top:.5rem}
+.pdfAcc summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:.78rem .92rem;font-weight:600}
+.pdfAcc summary::-webkit-details-marker{display:none}
+.pdfAcc summary span{display:block;min-width:0;color:#342e36;font-family:"Space Grotesk","Segoe UI",sans-serif;font-size:.95rem;font-weight:700;line-height:1.25;text-align:left}
+.pdfAcc summary small{display:inline-flex;align-items:center;justify-content:center;min-width:52px;padding:.2rem .55rem;border-radius:999px;background:rgba(96,67,45,.1);color:#7a6661;font-weight:700;text-align:center;white-space:nowrap}
+.pdfAcc summary::after{content:'+';display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:999px;background:rgba(96,67,45,.08);font-weight:700;color:#7a6661}
+.pdfAcc[open] summary::after{content:'-'}
+.pdfAccBody{padding:.04rem .82rem .82rem}
+.pdfAccBody p{margin:0 0 .62rem;color:#2f2930;font-size:.88rem;line-height:1.52}
+.pdfAccBody p:last-child{margin-bottom:0}
+.accCollapseWrap{display:flex;justify-content:flex-end;padding-top:.6rem}
+.accCollapse{border:1px solid rgba(255,248,236,.16);border-radius:999px;background:rgba(243,230,216,.06);color:var(--tx);font:600 .76rem/1 "Space Grotesk",sans-serif;padding:.46rem .82rem;cursor:pointer}
+.rst{margin-top:.8rem;border:1px solid rgba(72,49,36,.28);border-radius:14px;background:linear-gradient(180deg,#6d4d3b,#4f382d);color:#f7efe7;font:700 .84rem/1 "Space Grotesk",sans-serif;padding:.82rem 1rem;cursor:pointer;box-shadow:0 10px 22px rgba(72,49,36,.18),inset 0 1px 0 rgba(255,255,255,.08)}
+#winModal{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:18px;background:rgba(8,10,18,.72);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .22s ease}
+#winModal.show{opacity:1;pointer-events:auto}
+.winCard{width:min(430px,100%);border:1px solid rgba(255,248,236,.16);border-radius:28px;background:linear-gradient(180deg,rgba(21,24,35,.98),rgba(11,13,19,.98));box-shadow:0 28px 70px rgba(0,0,0,.4);padding:22px 20px;text-align:center}
+.winCard h3{font-family:"Cormorant Garamond",serif;font-size:2rem;margin-bottom:.45rem;letter-spacing:-.02em}
+.winCard p{margin:.55rem 0 0;color:color-mix(in srgb,var(--tx) 88%,var(--mut))}
+.winBadge{display:block;width:min(240px,100%);height:auto;margin:12px auto 10px;border-radius:20px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.03);box-shadow:0 12px 24px rgba(0,0,0,.2)}
+.winNote{display:block;color:var(--mut);font-size:.8rem;letter-spacing:.05em;text-transform:uppercase}
+.winActions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.winActions a,.winActions button{appearance:none;border:0;border-radius:999px;padding:.72rem 1rem;font:700 .86rem/1 "Space Grotesk",sans-serif;cursor:pointer;text-decoration:none}
+.winActions a{background:var(--ac);color:var(--btn-tx)}
+.winActions button{background:rgba(255,255,255,.12);color:var(--tx);border:1px solid rgba(255,255,255,.16)}
+.madeBy{display:flex;align-items:center;justify-content:center;gap:10px;padding:22px 0 34px;color:var(--mut);font-size:.82rem}
+.madeByBrand{display:inline-flex;align-items:center;gap:10px}
+.madeByMark{width:18px;height:18px;display:block}
+.madeByWord{height:14px;display:block}
+@media (max-width:980px){.layout{grid-template-columns:1fr}#hud{display:none}#mpeek{display:block}.node:nth-child(n){transform:none}.hero:before{opacity:.45;right:10px;top:18px;width:220px;height:290px}.heroArt{width:min(42vw,250px);max-width:46%;right:8px;top:12px;border-width:10px;border-bottom-width:40px}}
+@media (max-width:720px){.stats,.grid2,.nodes{grid-template-columns:1fr}.scene{min-height:68vh}.hero{padding:32px 22px 38px}.card{border-radius:22px}.card h2{font-size:1.72rem}.heroArt{width:182px;max-width:none;right:6px;top:14px;opacity:.96}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="hero scene" id="s0" data-short="00" data-phase="Пре-брифинг" data-title="Перед первым прохождением" data-obj="Понять, что именно можно чинить через выбор сцен, а что ломается навсегда в текущем сейве." data-risk="Перепутать Collectible Mode с настоящим откатом и похоронить single-playthrough трофеи." data-gain="Чистый маршрут к платине за 2 полноценных прохождения и один безопасный cleanup." data-progress="0" data-trophies="0" data-list="30 трофеев|2 прохождения|10-15 часов|21 скрытый трофей">
+<span class="kicker">Telegram Mini App / Narrative Roadmap</span>
+<h1>Life is Strange: Reunion<br>Интерактивный путь<br>к платине</h1>
+<img class="heroArt" src="image_2026-03-27_00-03-53.png" alt="" aria-hidden="true">
+<div class="stats"><div class="st"><b>30</b><span>Трофеев</span></div><div class="st"><b>2</b><span>Прохождения</span></div><div class="st"><b>10-15ч</b><span>Ориентир</span></div><div class="st"><b>4</b><span>Крит. трекера</span></div></div>
+<p class="warn">Главная ловушка гайда: Collectible Mode годится только для автономных коллекционок. Если вы сломали улики, Backtalk или сюжетную ветку, спасает только Reload Checkpoint или полный откат через Chapter Select.</p>
+</header>
+<div id="mpeek" aria-label="Мобильный прогресс">
+  <div class="mpeek-top"><small id="mstep">Фаза 0/8</small><b id="mpercent">0%</b></div>
+  <div class="mpeek-title" id="mtitle">Перед первым прохождением</div>
+  <div class="mpbar"><div class="mpfill" id="mfill"></div></div>
+</div>
+<div class="layout">
+<aside id="hud"><small id="hp">Пре-брифинг</small><h3 id="ht">Перед первым прохождением</h3><p id="ho"></p>
+<div class="meta"><div><b>Риск</b><span id="hr"></span></div><div><b>Награда</b><span id="hg"></span></div></div>
+<div class="row"><span>Маршрут до платины</span><span id="hpr">0%</span></div><div class="bar" id="hbar"><div class="fill" id="hf"></div></div>
+<div class="ring" id="ring"><span id="rt">0 / 16</span></div><div id="timeline"></div><ul id="hlist"></ul></aside>
+<article>
+<section class="scene" id="s1" data-short="01" data-phase="Фаза 1/8" data-title="Как пользоваться этим гайдом" data-obj="Быстро понять, с какого сценария входить: с нуля, на cleanup или в rescue-режим." data-risk="Читать подряд весь гайд, когда вам нужен только один конкретный сценарий." data-gain="Быстрый вход в нужный раздел и меньше путаницы для подписчика." data-progress="12" data-trophies="4" data-list="Полный разбор|Telegram Mini App|Локальный прогресс|3 сценария входа">
+<div class="card"><h2>1) Как пользоваться этим мини-аппом</h2><p class="warn"><b>Важно:</b> здесь есть полные спойлеры по таймлайнам, концовкам, трофеям и ключевым сюжетным развилкам. Мини-апп сделан для тех, кто уже осознанно зашел именно за платиной и готов к полному разбору.</p><p class="warn"><b>Пометка по актуальности:</b> игра вышла 26 марта 2026 года, поэтому этот мини-апп будет дорабатываться по мере появления новых подтвержденных фактов, уточнений и рабочих маршрутов от сообщества.</p><p>Этот мини-апп нужен не для общего знакомства с игрой, а для понятного прохождения к платине: с английскими названиями трофеев, русскими пояснениями и быстрым переходом к нужному сценарию - маршрут, cleanup или rescue.</p>
+<div class="nodes"><div class="node"><h4>Иду с нуля</h4><p>Читайте фазы подряд. Критический маршрут начинается с good run, потом cleanup, потом disaster run.</p></div><div class="node"><h4>Добиваю хвосты</h4><p>Сразу открывайте индекс ачивок, затем переходите к cleanup и финальному аудиту.</p></div><div class="node"><h4>Уже что-то сломал</h4><p>Сначала смотрите rescue-логику во второй фазе, а потом уже решайте, нужен ли Collectible Mode или Chapter Select.</p></div></div>
+<div class="grid2"><ul><li><b>Формат:</b> Telegram Mini App с локальным прогрессом через браузер Telegram.</li><li><b>Названия трофеев:</b> английские, чтобы не ломать узнаваемость списка.</li><li><b>Описание:</b> на русском, с полной маршрутизацией и без мягких формулировок.</li></ul><ul><li><b>Структура:</b> 1 платина, 4 золота, 15 серебра, 10 бронзы.</li><li><b>Ориентир времени:</b> 10-15 часов по трем исходным документам.</li><li><b>Чистый план:</b> Perfect Run -> Collectible Cleanup -> Disaster Run.</li></ul></div>
+<div class="tags"><span>Full spoilers</span><span>English trophy names</span><span>Local progress</span><span>Subscriber-first UX</span></div><div class="phaseChk">
+<div class="phaseChkHead"><span>Чек-лист фазы</span><b>Фаза 1</b></div>
+<ul class="phaseTodo">
+<li><label><input data-k="p1_route" type="checkbox">Определил свой сценарий входа: с нуля, cleanup или rescue</label></li>
+<li><label><input data-k="p1_basics" type="checkbox">Понимаю формат гайда: полный разбор, английские названия и локальный прогресс</label></li>
+</ul>
+</div>
+<div class="phaseDeep" id="deep-s1"><h3>Развернутое пояснение</h3><details class="pdfAcc"><summary><span>База и архитектура наград</span><small>Важно</small></summary><div class="pdfAccBody"><p>В документах Life is Strange: Reunion описывается как игра с низким порогом входа, но с очень злой трофейной архитектурой. Здесь нет онлайна, таймеров на реакцию или обязательной высокой сложности, зато есть жесткие накопительные условия и две взаимоисключающие сюжетные реальности.</p><p>На PS5 речь идет о 30 трофеях по схеме 1/4/15/10. Примерный ориентир на платину - 10-15 часов, но только если не ломать сейвы и не пытаться закрыть противоположные моральные ветки в один заход.</p></div></details><details class="pdfAcc"><summary><span>Главная мысль маршрута</span><small>Основа</small></summary><div class="pdfAccBody"><p>Канонический маршрут из папки сводится к трем шагам: первый проход закрывает все single-playthrough условия и хороший финал, затем идет безопасная зачистка автономных коллекционок через Collectible Mode, после чего начинается полностью новая игра под плохую ветку и конфликтующие концовки.</p><p>Ключевая экономия времени появляется не за счет спидрана, а за счет того, что вы заранее разделяете задачи по тем режимам, где игра действительно умеет сохранять нужный тип прогресса.</p></div></details></div><div class="phaseDeep" id="trophy-index"><h3>Индекс ачивок</h3><details class="pdfAcc"><summary><span>Платина</span><small>1</small></summary><div class="pdfAccBody"><p><b>Life is Strange</b> - собрать все трофеи в Life is Strange: Reunion. Это финальная награда за полный профиль.</p></div></details><details class="pdfAcc"><summary><span>Золото</span><small>4</small></summary><div class="pdfAccBody"><p><b>Partners in Time</b> - завершить игру. Категория: любой полный забег.</p><p><b>All These Memories</b> - найти все коллекционные предметы. Категория: cleanup / коллекционки.</p><p><b>Sass Queen</b> - выиграть все перепалки за одно прохождение. Категория: good run / single-playthrough.</p><p><b>You're Coming With Me</b> - спасти Сафи. Категория: good run.</p></div></details><details class="pdfAcc"><summary><span>Серебро</span><small>15</small></summary><div class="pdfAccBody"><p><b>Soul of a Poet</b> - выслушать всю поэзию во время Open Mic Night. Категория: good run / single-playthrough.</p><p><b>Partners in Crime</b> - совершить совместный побег. Категория: disaster run / концовка.</p><p><b>You'll All Burn</b> - угроза все еще сохраняется. Категория: disaster run.</p><p><b>It's, Uh, Kind of Fascinating to Me</b> - понаблюдать за спящим гостем. Категория: cleanup / сцена.</p><p><b>Uranus's Long-Lost Cousin</b> - помочь Моисею выбрать имя для звезды. Категория: cleanup / сцена.</p><p><b>Slick Rick</b> - убедить Лукаса слить детали о протесте. Категория: good run / диалог.</p><p><b>Happy Birthday!</b> - подарить Макс подарок на ее день рождения. Категория: cleanup / сцена.</p><p><b>Major Gumshoe</b> - найти все части опциональных улик за одно прохождение. Категория: good run / single-playthrough.</p><p><b>Podcast Overload</b> - прослушать все подкасты. Категория: good run / single-playthrough.</p><p><b>Super Max</b> - спасти всех возможных персонажей. Категория: good run.</p><p><b>Laser Light Spectacular!</b> - разделить особенный момент с Хлоей и Моисеем. Категория: cleanup / сцена.</p><p><b>Photo Wall</b> - найти все коллекционные предметы Макс. Категория: cleanup / коллекционки.</p><p><b>Drugstore Makeup</b> - найти все коллекционные предметы Хлои. Категория: cleanup / коллекционки.</p><p><b>Blue Haired Girl</b> - пройти игру в ветке спасенной Хлои. Категория: good run / таймлайн.</p><p><b>Dead Girl Walking</b> - пройти игру в ветке мертвой Хлои. Категория: disaster run / таймлайн.</p></div></details><details class="pdfAcc"><summary><span>Бронза</span><small>10</small></summary><div class="pdfAccBody"><p><b>Green-Haired Girl</b> - впервые сыграть за Хлою. Категория: любой забег.</p><p><b>Mad Max</b> - впервые сыграть за Макс. Категория: любой забег.</p><p><b>Prospective Student</b> - убедить Ноэль, что вы пришли на экскурсию. Категория: good run / диалог.</p><p><b>Reunion</b> - воссоединить Макс и Хлою. Категория: любой полный забег.</p><p><b>Bucket Challenge</b> - остановить удаление протестного граффити. Категория: cleanup / сцена.</p><p><b>Going Once… Going Twice!</b> - выиграть войну ставок на тихом аукционе. Категория: cleanup / сцена.</p><p><b>Not a Rat</b> - убедить Джоуи, что вы часть протеста. Категория: good run / диалог.</p><p><b>Daddy Issues</b> - заставить Рена признаться в своей вражде с Каледоном. Категория: good run / диалог.</p><p><b>Bottled It!</b> - остановить пожар, играя за Хлою. Категория: disaster run / финал.</p><p><b>Second Chance</b> - остановить пожар, играя за Макс. Категория: good run / финал.</p></div></details></div></div>
+</section>
+
+<section class="scene" id="s2" data-short="02" data-phase="Фаза 2/8" data-title="Режим спасения: уже что-то запорол" data-obj="Быстро понять, что именно сломано и каким инструментом это реально чинится." data-risk="Чинить broken tracker через песочницу и тратить время впустую." data-gain="Точный откат без слепого перепрохождения и ложных надежд." data-progress="24" data-trophies="7" data-list="Пропустил коллекционку|Слил Backtalk|Сломал таймлайн|Chapter Select">
+<div class="card"><h2>2) Что делать, если уже что-то запорол</h2><p>Это и есть rescue-режим. Если игрок пришел в гайд не с нуля, а после ошибки, он не должен читать весь маршрут заново. Сначала нужно классифицировать проблему, а уже потом переигрывать.</p>
+<div class="nodes"><div class="node"><h4>Фото или мерч</h4><p>Чаще всего лечится через Collectible Mode. Это безопасный тип хвоста.</p></div><div class="node"><h4>Backtalk или улика</h4><p>Это уже tracker, а не галерея. Нужен Reload Checkpoint или Chapter Select.</p></div><div class="node"><h4>Финальная ветка</h4><p>Если взяли не ту мораль или не тот таймлайн, иногда нужен уже не cleanup, а новый полноценный забег.</p></div></div><div class="code"><b>Главный принцип rescue-режима:</b> сначала определить тип ошибки, потом выбирать инструмент исправления. Не наоборот.</div><div class="phaseChk">
+<div class="phaseChkHead"><span>Чек-лист фазы</span><b>Фаза 2</b></div>
+<ul class="phaseTodo">
+<li><label><input data-k="p2_collectible" type="checkbox">Сначала определил тип ошибки: галерея, сцена, single-playthrough трекер или концовка</label></li>
+<li><label><input data-k="p2_branch" type="checkbox">Выбрал правильный способ отката, а не переигрываю наугад</label></li>
+</ul>
+</div>
+<div class="phaseDeep" id="deep-s2"><h3>Развернутое пояснение</h3><details class="pdfAcc"><summary><span>Что сохраняет Collectible Mode</span><small>Безопасно</small></summary><div class="pdfAccBody"><p>Collectible Mode нужен для свободного добора уже известных фото и предметов галереи. По документам он мгновенно пишет в глобальный мета-профиль только автономные коллекционки - например, снимки Макс и мерч Drugstore Makeup.</p><p>Если вы попытаетесь там дособрать улику для Major Gumshoe, переиграть проигранный Backtalk или поменять решение, влияющее на выживание персонажа, основной прогресс этого прохождения не перепишется.</p></div></details><details class="pdfAcc"><summary><span>Когда нужен Chapter Select</span><small>Откат</small></summary><div class="pdfAccBody"><p>Chapter Select запускается не для удобства, а для хирургического исправления ошибки. Он создает новую ветку от нужной главы, после чего вам приходится заново проходить все следующие эпизоды до финала, чтобы новая переменная дошла до титров и корректно сработал трофей.</p><p>Именно поэтому single-playthrough достижения надо беречь в реальном времени, а не рассчитывать потом быстро поправить через выбор сцен.</p></div></details><details class="pdfAcc"><summary><span>Микро-откат через Reload Checkpoint</span><small>Срочно</small></summary><div class="pdfAccBody"><p>Если промахнулись по реплике в Backtalk или увидели, что сцена уходит в плохую сторону, ставьте игру на паузу и жмите Reload Checkpoint до появления иконки автосохранения. Это самый дешевый и быстрый способ не превращать одну неудачу в перепрохождение половины кампании.</p></div></details><details class="pdfAcc"><summary><span>Матрица исправления ошибок</span><small>Шпаргалка</small></summary><div class="pdfAccBody"><p><b>Пропустили фото Макс или мерч Хлои:</b> почти всегда это задача для Collectible Mode.</p><p><b>Пропустили улику, слили Backtalk или запороли чье-то спасение:</b> это уже не песочница, а Reload Checkpoint или полноценный Chapter Select.</p><p><b>Пошли через Chapter Select:</b> мысленно считайте, что начали новую ветку, и доводите ее до титров. Иначе игра может не признать исправление.</p></div></details></div></div>
+</section>
+<section class="scene" id="s3" data-short="03" data-phase="Фаза 3/8" data-title="Красная зона: 4 single-playthrough трофея" data-obj="Постоянно держать в голове все трекеры, которые нельзя добить песочницей." data-risk="Потерять много часов из-за одной не прослушанной сцены или одного провала в Backtalk." data-gain="Безопасный первый проход без скрытых дыр." data-progress="38" data-trophies="11" data-list="Major Gumshoe|Sass Queen|Podcast Overload|Soul of a Poet">
+<div class="card"><h2>3) Четыре трофея, которые нельзя отпускать из головы</h2><p>В provided гайдах именно эти четыре достижения названы главной зоной риска. Все они привязаны к одному непрерывному прохождению и не прощают ошибку, если она успела попасть в автосейв.</p>
+<div class="nodes"><div class="node"><h4>Major Gumshoe</h4><p>Собрать все опциональные улики. Нужен маниакальный обыск каждой сцены до сюжетного триггера.</p></div><div class="node"><h4>Sass Queen</h4><p>Выиграть все Backtalk за Хлою. Ошибка лечится только мгновенной перезагрузкой чекпоинта.</p></div><div class="node"><h4>Podcast Overload</h4><p>Прослушать все подкасты до конца, не прерывая сцену раньше времени.</p></div><div class="node"><h4>Soul of a Poet</h4><p>На Open Mic Night нельзя уходить, пока не выступят вообще все поэты.</p></div></div><div class="code"><b>Экстренная реакция на Backtalk:</b> Pause -> Reload Checkpoint -> до иконки автосейва. Если автосейв прошел, текущий perfect run уже подозрителен.</div><div class="phaseChk">
+<div class="phaseChkHead"><span>Чек-лист фазы</span><b>Фаза 3</b></div>
+<ul class="phaseTodo">
+<li><label><input data-k="p3_trackers" type="checkbox">Контролирую улики, Backtalk и все подкасты в рамках одного непрерывного сейва</label></li>
+<li><label><input data-k="p3_poetry" type="checkbox">На Open Mic Night дослушал весь поэтический блок до конца и не ушел раньше</label></li>
+</ul>
+</div>
+<div class="phaseDeep" id="deep-s3"><h3>Развернутое пояснение</h3><details class="pdfAcc"><summary><span>Улики: Major Gumshoe</span><small>Трекер</small></summary><div class="pdfAccBody"><p>Этот серебряный трофей требует собрать все части опциональных улик в одном прохождении. В документах он описывается как центральный детективный трек Макс, завязанный на методичном исследовании каждой локации Каледона до продвижения по основному желтому маркеру.</p><p>Практический вывод простой: говорите с ключевыми NPC и запускайте обязательные сцены только после того, как пропылесосили комнату, коридор и все интерактивные объекты вокруг.</p></div></details><details class="pdfAcc"><summary><span>Перепалки: Sass Queen</span><small>Трекер</small></summary><div class="pdfAccBody"><p>Золотой кубок за все выигранные словесные дуэли Хлои. Механика описывается как мини-игра на время: нужно слышать ключевые слова оппонента и контрить их правильной репликой.</p><p>Критическая часть не в сложности самих ответов, а в жестком автосейве. Если видите, что спор проигран, не досматривайте сцену до конца - откатывайтесь немедленно.</p></div></details><details class="pdfAcc"><summary><span>Подкасты: Podcast Overload</span><small>Трекер</small></summary><div class="pdfAccBody"><p>По материалам из папки подкасты разбросаны по хронологии и могут быть привязаны к радиоприемникам, компьютерам или телефону Макс. Для надежности считайте правило таким: если включили подкаст, стойте рядом, пока он не доиграет полностью.</p></div></details><details class="pdfAcc"><summary><span>Вечер поэзии: Soul of a Poet</span><small>Трекер</small></summary><div class="pdfAccBody"><p>Это классический трофей на терпение и атмосферу. Оказавшись на вечере Open Mic Night в Snapping Turtle, не торопите сюжет, не выходите из бара и не запускайте дальнейшие ключевые диалоги, пока все выступления не закончатся.</p></div></details><details class="pdfAcc"><summary><span>Признаки мгновенного провала</span><small>Риск</small></summary><div class="pdfAccBody"><p><b>Красный сигнал сразу:</b> пропущенная улика в закрывшейся сцене, проигранный Backtalk, прерванный подкаст или ранний выход из Open Mic.</p><p><b>Если иконка автосейва уже прошла:</b> считайте этот трекер сломанным для текущей ветки и решайте, нужен ли немедленный откат через главу.</p><p><b>Практика:</b> перед длинными диалогами и очевидными развилками играйте медленно и держите палец в голове на паузе, а не на удаче.</p></div></details></div></div>
+</section>
+
+<section class="scene" id="s4" data-short="04" data-phase="Фаза 4/8" data-title="Таймлайны, финалы и конфликтующие пары" data-obj="Разнести противоположные трофеи по разным прохождениям заранее." data-risk="Попытаться схлопнуть несовместимые ветки и получить в итоге ни одну." data-gain="Четкая раскладка, какие трофеи падают в каком забеге." data-progress="52" data-trophies="17" data-list="Blue Haired Girl|Dead Girl Walking|Second Chance|Bottled It!">
+<div class="card"><h2>4) Reunion физически требует разных ролей</h2><p>Главный нарративный конфликт лежит не в одном финальном выборе, а сразу в трех слоях: корневая предыстория мира, способ остановки пожара и моральный тон всего прохождения. Из-за этого платина не собирается одним идеальным сейвом.</p>
+<ul class="splits"><li><time>Root</time><b>Story So Far:</b> "Пожертвовать Аркадия-Бэй" ведет к Blue Haired Girl, а "Пожертвовать Хлоей" - к Dead Girl Walking.</li><li><time>Fire</time><b>Кульминация пожара:</b> Макс останавливает катастрофу ради Second Chance, Хлоя - ради Bottled It!.</li><li><time>Ethics</time><b>Моральная линия:</b> Super Max требует спасти всех, You'll All Burn требует позволить угрозе сохраниться.</li><li><time>Run 1</time><b>Хорошая ветка:</b> Blue Haired Girl + Super Max + спасение Сафи.</li><li><time>Run 2</time><b>Плохая ветка:</b> Dead Girl Walking + You'll All Burn + Bottled It!.</li></ul>
+<div class="tags"><span>Blue Haired Girl</span><span>Dead Girl Walking</span><span>Second Chance</span><span>Bottled It!</span><span>Super Max</span><span>You'll All Burn</span></div>
+<div class="phaseChk">
+<div class="phaseChkHead"><span>Чек-лист фазы</span><b>Фаза 4</b></div>
+<ul class="phaseTodo">
+<li><label><input data-k="p4_timeline" type="checkbox">Развел корневые таймлайны по разным New Game и не пытаюсь добрать их через последнюю главу</label></li>
+<li><label><input data-k="p4_finals" type="checkbox">Заранее распределил финальные пары: Second Chance на good run, Bottled It! и burn-ветку на disaster run</label></li>
+</ul>
+</div>
+<div class="phaseDeep" id="deep-s4"><h3>Развернутое пояснение</h3><details class="pdfAcc"><summary><span>Корневой таймлайн</span><small>Основа</small></summary><div class="pdfAccBody"><p>Корневая развилка задается в прологе через меню The Story So Far. В документах этот выбор описывается как мета-состояние мира, которое перестраивает доступный контент и жестко привязывается к двум конфликтующим золотым трофеям.</p><p>Практический вывод: выбор предыстории нельзя надежно "докинуть" через последнюю главу. Нужны два полных прохождения от начала до конца.</p></div></details><details class="pdfAcc"><summary><span>Финальный выбор пожара</span><small>Финал</small></summary><div class="pdfAccBody"><p>В кульминации пожара документы выделяют два взаимоисключающих варианта ответственности: Макс гасит кризис силами перемотки времени, либо Хлоя вытягивает ситуацию физически, без магии Макс.</p><p>Это два разных финальных кубка, поэтому их удобно раскладывать по good run и disaster run без лишнего смешивания целей.</p></div></details><details class="pdfAcc"><summary><span>Этика маршрута</span><small>Мораль</small></summary><div class="pdfAccBody"><p>Super Max требует идеального альтруиста: спасти всех возможных персонажей и не допустить лишних жертв. You'll All Burn, наоборот, просит сознательно допустить катастрофический сценарий и удержать угрозу живой.</p><p>Именно эта моральная пара делает двухходовый маршрут обязательным даже без учета корневого выбора Хлои.</p></div></details><details class="pdfAcc"><summary><span>Раскладка по двум забегам</span><small>Схема</small></summary><div class="pdfAccBody"><p><b>Good run:</b> Blue Haired Girl, Super Max, спасение Сафи, весь нервный single-playthrough пакет и удобно закрытый Second Chance.</p><p><b>Disaster run:</b> Dead Girl Walking, плохая этика, живущая угроза, Bottled It! и любые эгоистичные концовочные развилки, которые противоречат идеальному маршруту.</p><p><b>Главная польза схемы:</b> вы заранее знаете, какой забег чему принадлежит, и не принимаете решения в финале наугад.</p></div></details></div></div>
+</section>
+
+<section class="scene" id="s5" data-short="05" data-phase="Фаза 5/8" data-title="Шаг 1: идеальный good run" data-obj="Закрыть весь тяжелый single-playthrough пакет на хорошей ветке." data-risk="Промахнуться по улике, спору или спасению персонажа и превратить perfect run в черновик." data-gain="Blue Haired Girl, Super Max и почти весь нервный пласт трофеев." data-progress="68" data-trophies="23" data-list="Super Max|You're Coming With Me|Major Gumshoe|Blue Haired Girl">
+<div class="card"><h2>5) Шаг 1 - хороший таймлайн и идеальный детектив</h2><p>Первый проход - самый ответственный. Здесь вы закрываете почти все, что нельзя потом безболезненно добрать песочницей: улики, Backtalk, подкасты, Open Mic и альтруистичные решения.</p>
+<ul class="splits"><li><time>00</time><b>Пролог:</b> в The Story So Far выбирайте "Пожертвовать Аркадия-Бэй ради Хлои" под ветку Blue Haired Girl.</li><li><time>01</time><b>Макс:</b> пылесосьте все сцены на улики и подкасты до сюжетного продвижения.</li><li><time>02</time><b>Хлоя:</b> выигрывайте каждый Backtalk и не давайте автосейву записывать поражение.</li><li><time>03</time><b>Атмосфера:</b> дослушайте весь Open Mic, не ломая ход сцены спешкой.</li><li><time>04</time><b>Этика:</b> спасайте Сафи и вообще всех, кого игра позволяет вытянуть, чтобы выйти на Super Max.</li><li><time>05</time><b>Финал:</b> на good run удобно брать Second Chance, оставляя Bottled It! на второй забег.</li></ul>
+<div class="tags"><span>Run 1</span><span>Good route</span><span>Blue Haired Girl</span><span>Second Chance</span><span>Super Max</span></div>
+<div class="phaseChk">
+<div class="phaseChkHead"><span>Чек-лист фазы</span><b>Фаза 5</b></div>
+<ul class="phaseTodo">
+<li><label><input data-k="p5_blue" type="checkbox">Запустил первый проход на ветке спасенной Хлои и держу курс на Blue Haired Girl</label></li>
+<li><label><input data-k="p5_perfect" type="checkbox">На good run собрал улики, подкасты, все Backtalk, Open Mic и спасение Сафи под Super Max</label></li>
+</ul>
+</div>
+<div class="phaseDeep" id="deep-s5"><h3>Развернутое пояснение</h3><details class="pdfAcc"><summary><span>Как вести первый проход</span><small>Маршрут</small></summary><div class="pdfAccBody"><p>По структуре из документов именно первый проход должен быть идеальным. Он самый долгий и самый внимательный: вы еще не спешите, зато берете весь нервный блок достижений, привязанных к одному непрерывному сейву.</p><p>Важный смысл good run - не просто закрыть Super Max, а избавить второй забег от всего душного: на disaster run уже не хочется слушать поэзию, искать каждую улику и делать сейвскам в каждом споре.</p></div></details><details class="pdfAcc"><summary><span>Что нельзя уронить в Шаге 1</span><small>Риск</small></summary><div class="pdfAccBody"><p>Если в первом прохождении вы провалили улики, проиграли Backtalk или недослушали Open Mic, не надейтесь потом быстро поправить это через выбор сцен. В лучшем случае вас ждет Chapter Select и добегание до титров, в худшем - полный перезапуск good run.</p><p>С практической точки зрения этот шаг надо играть медленно, с паузами и постоянной привычкой осматривать сцену до разговора с любым важным персонажем.</p></div></details><details class="pdfAcc"><summary><span>Приоритеты хорошего забега</span><small>Порядок</small></summary><div class="pdfAccBody"><p><b>Сначала:</b> локация, улики и подкасты. Только потом разговор с важным NPC или сюжетный маркер.</p><p><b>Во всех сценах Хлои:</b> относитесь к Backtalk как к мини-боссу, а не как к обычному диалогу. Ошибка там дороже, чем в любой опциональной мелочи.</p><p><b>В атмосферных сценах:</b> не спешите. Вечера, выступления и длинные прослушивания чаще ломаются не от сложности, а от того, что игрок сам ускоряет эпизод.</p></div></details></div></div>
+</section>
+<section class="scene" id="s6" data-short="06" data-phase="Фаза 6/8" data-title="Шаг 2: безопасный Collectible Cleanup" data-obj="Добить галерею Макс и мерч Хлои, не ломая идеальный сейв." data-risk="Полезть в песочницу за уликами или сюжетными флагами и потратить время впустую." data-gain="Photo Wall, Drugstore Makeup, All These Memories и спокойный добор мягких сценовых кубков." data-progress="82" data-trophies="27" data-list="Photo Wall|Drugstore Makeup|All These Memories|Bucket Challenge">
+<div class="card"><h2>6) Шаг 2 - песочница только для того, что она реально умеет</h2><p>После первого финала можно выдохнуть и идти в Play Episodes. Здесь вы не чините сюжет, а закрываете автономные фото, меморабилию и мягкие контекстные трофеи, которые не требуют непрерывного сейва.</p>
+<div class="grid2"><ul><li><b>Для Макс - Photo Wall:</b> ищите фототочки, реакции и селфи, которые пишутся в глобальную галерею.</li><li><b>Для Хлои - Drugstore Makeup:</b> добирайте мерч и меморабилию панк-группы, а не условные "скетчи".</li><li><b>Итог шага:</b> золотой All These Memories закрывается без риска для good run.</li></ul><ul><li><b>Безопасные ситуативные добивания:</b> Going Once... Going Twice!, Bucket Challenge, Uranus's Long-Lost Cousin.</li><li><b>Также можно проверить:</b> It's, Uh, Kind of Fascinating to Me, Happy Birthday!, Laser Light Spectacular!.</li><li><b>Не трогаем здесь:</b> улики, Backtalk, спасение персонажей и любые моральные ветки.</li></ul></div>
+<div class="tags"><span>Collectible Mode</span><span>Photo Wall</span><span>Drugstore Makeup</span><span>All These Memories</span></div>
+<div class="phaseChk">
+<div class="phaseChkHead"><span>Чек-лист фазы</span><b>Фаза 6</b></div>
+<ul class="phaseTodo">
+<li><label><input data-k="p6_gallery" type="checkbox">Добрал фото Макс и меморабилию Хлои через безопасный Collectible Mode</label></li>
+<li><label><input data-k="p6_safe" type="checkbox">Закрыл мягкие сценовые трофеи, не лезя песочницей в сюжетные трекеры</label></li>
+</ul>
+</div>
+<div class="phaseDeep" id="deep-s6"><h3>Развернутое пояснение</h3><details class="pdfAcc"><summary><span>Как работает зачистка</span><small>Зачистка</small></summary><div class="pdfAccBody"><p>Шаг 2 существует именно для того, чтобы отделить автономные коллекционки от нервного сюжетного ядра. В материалах это прямым текстом описано как зачистка мета-профиля перед тем, как вы сознательно сотрете хороший мир второй новой игрой.</p><p>Если на good run что-то из галереи пропустили, сейчас самое время пройти нужные сцены точечно и без спешки.</p></div></details><details class="pdfAcc"><summary><span>Коллекционки Макс и Хлои</span><small>Галерея</small></summary><div class="pdfAccBody"><p>Photo Wall относится к фототочкам Макс: снимки граффити, лабораторных реакций, зеркал, характерных сцен кампуса и других опциональных моментов. Drugstore Makeup в provided документах интерпретируется как меморабилия одноименной панк-группы, связанной с Хлоей, Стеф и музыкальной линией франшизы.</p><p>Практически это значит, что для Хлои вы смотрите не на условные художественные скетчи, а на флаеры, медиаторы, брелоки, листы песен и протестные артефакты.</p></div></details><details class="pdfAcc"><summary><span>Какие сцены добивать здесь</span><small>Сцены</small></summary><div class="pdfAccBody"><p>По таблицам из документов к мягким ситуативным трофеям относятся аукцион, саботаж смыва граффити, помощь Моисею со звездой, наблюдение за спящим персонажем, подарок Макс и цветная сцена единения с Хлоей и Моисеем. Их удобно перепроверять именно на cleanup-шаге, потому что они не требуют сохранения непрерывного нарратива на всю кампанию.</p><p>Честная оговорка: часть деталей внутри самих документов помечена как предположение, так что здесь лучше действовать с локальными сейвами перед конкретной сценой.</p></div></details><details class="pdfAcc"><summary><span>Практические примеры для зачистки</span><small>Примеры</small></summary><div class="pdfAccBody"><p><b>Для Макс:</b> следите за вещами, которые логично фотографировать только после локального триггера сцены: граффити, лабораторные реакции, зеркала, характерные инсталляции кампуса.</p><p><b>Для Хлои:</b> проверяйте музыкальные и протестные точки интереса: бар, студию, концертные артефакты, флаеры, медиаторы, брелоки и листы текста песен.</p><p><b>Если не уверены в сценовом кубке:</b> делайте отдельный локальный сейв перед эпизодом и тестируйте спокойно, не трогая основной finished profile.</p></div></details></div></div>
+</section>
+
+<section class="scene" id="s7" data-short="07" data-phase="Фаза 7/8" data-title="Шаг 3: disaster run и плохая этика" data-obj="Закрыть вторую корневую реальность и конфликтующие катастрофические кубки." data-risk="Снова начать играть как перфекционист и тратить время на то, что уже надо было закрыть раньше." data-gain="Dead Girl Walking, You'll All Burn, Bottled It! и финальная противоположная ветка." data-progress="94" data-trophies="29" data-list="Dead Girl Walking|You'll All Burn|Bottled It!|Partners in Crime">
+<div class="card"><h2>7) Шаг 3 - отдельная новая игра под плохую линию</h2><p>На этом этапе вы уже знаете игру и не обязаны повторять детективный идеализм. Disaster run нужен для второй корневой реальности, плохой этики и тех концовок, которые конфликтуют с Super Max.</p>
+<ul class="splits"><li><time>00</time><b>Новая игра:</b> в The Story So Far выбирайте "Пожертвовать Хлоей" под ветку Dead Girl Walking.</li><li><time>01</time><b>Новый тон:</b> забудьте про поиск каждой улики, всех подкастов и идеальный Backtalk.</li><li><time>02</time><b>Этика катастрофы:</b> допускайте плохие последствия, не спасайте всех и держите угрозу живой ради You'll All Burn.</li><li><time>03</time><b>Финал:</b> во второй ветке удобно брать Bottled It!, отдавая финальную физическую остановку пожара Хлое.</li><li><time>04</time><b>Доп. цель:</b> по provided документам здесь же логично искать Partners in Crime, если игра ведет к эгоистичному совместному побегу.</li></ul>
+<div class="tags"><span>Run 2</span><span>Dead Girl Walking</span><span>You'll All Burn</span><span>Bottled It!</span></div>
+<div class="phaseChk">
+<div class="phaseChkHead"><span>Чек-лист фазы</span><b>Фаза 7</b></div>
+<ul class="phaseTodo">
+<li><label><input data-k="p7_dead" type="checkbox">Запустил вторую новую игру на ветке мертвой Хлои под Dead Girl Walking</label></li>
+<li><label><input data-k="p7_burn" type="checkbox">На disaster run взял bad-этику, сохранил угрозу и закрыл Bottled It! вместе с burn-веткой</label></li>
+</ul>
+</div>
+<div class="phaseDeep" id="deep-s7"><h3>Развернутое пояснение</h3><details class="pdfAcc"><summary><span>Как вести второй проход</span><small>Маршрут</small></summary><div class="pdfAccBody"><p>Документы прямо советуют резко сменить тональность игры. На втором прохождении вы уже не обязаны страдать от детективной чистоты: задача этого забега - разрушить таймлайн, собрать противоположные сюжетные кубки и не тратить силы на то, что good run уже должен был закрыть.</p></div></details><details class="pdfAcc"><summary><span>Ветка Dead Girl Walking</span><small>Таймлайн</small></summary><div class="pdfAccBody"><p>Ветка с пожертвованной Хлоей описывается как реальность, где она появляется в Каледоне в виде парадокса и несет на себе следы "синаптических эхо". Для трофейного маршрута это главное: именно этот корневой выбор открывает вторую золотую линию и подтверждает необходимость полного нового прохождения.</p></div></details><details class="pdfAcc"><summary><span>Плохой финал и Bottled It!</span><small>Финал</small></summary><div class="pdfAccBody"><p>В bad run вы сознательно играете эгоистично и не спасаете всех, позволяя угрозе дожить до нужной точки. В provided гайдах это прямо противопоставляется этике Super Max.</p><p>Финальную пару удобно закрывать здесь: Хлоя останавливает пожар физически для Bottled It!, а общий тон прохождения удерживается достаточно темным, чтобы вывести сюжет в burn-сценарий.</p></div></details><details class="pdfAcc"><summary><span>Что игнорировать на втором забеге</span><small>Фокус</small></summary><div class="pdfAccBody"><p><b>Не тратьте темп</b> на повторный пылесос улик, подкастов и идеальных диалогов, если они уже закрыты в good run.</p><p><b>Главный фокус:</b> корневая ветка мертвой Хлои, плохая моральная линия, конфликтующие концовочные решения и все, что требует не спасать всех подряд.</p><p><b>Психологически это помогает:</b> второй проход перестает ощущаться как дублирование первого и превращается в точечный забег за противоположными трофеями.</p></div></details></div></div>
+</section>
+
+<section class="scene" id="s8" data-short="08" data-phase="Фаза 8/8" data-title="Финальный аудит и платина" data-obj="Проверить, какой тип пропуска у вас остался, и выбрать правильный способ добора." data-risk="Потратить еще один длинный заход не на ту категорию пропуска." data-gain="Чистый 30/30 и платиновый трофей без лишнего хаоса." data-progress="100" data-trophies="30" data-list="30/30 трофеев|Платина Life is Strange|Финальный аудит|Чистый профиль">
+<div class="card"><h2>8) Последний контроль перед 30/30</h2><p>К финалу задача уже не в длинном прохождении, а в правильной диагностике хвоста. Сначала поймите, что именно не упало: автономная коллекционка, мягкий сценовый кубок или broken single-playthrough ветка. От этого зависит следующий шаг.</p>
+<ul><li><b>Не хватает фото или мерча:</b> возвращайтесь в Collectible Mode и закрывайте галерею точечно.</li><li><b>Не хватает мягкого сценового кубка:</b> локальный сейв перед нужной сценой и короткий повтор.</li><li><b>Не хватает улики, Backtalk, подкаста или Open Mic:</b> это не cleanup-проблема, а повод смотреть, с какого Chapter Select начинать корректный добег до титров.</li><li><b>Не хватает противоположной концовки:</b> сверяйтесь с фазой 4 и не мешайте bad/good пары в одном профиле.</li></ul>
+<div class="code"><b>Быстрый аудит:</b> gallery tail -> Collectible Mode; scene tail -> локальный сейв; tracker tail -> Chapter Select и полноценный добег до конца.</div>
+<div class="phaseChk">
+<div class="phaseChkHead"><span>Чек-лист фазы</span><b>Фаза 8</b></div>
+<ul class="phaseTodo">
+<li><label><input data-k="p8_audit" type="checkbox">Провел финальный аудит хвостов и выбрал для каждого правильный тип отката</label></li>
+<li><label><input data-k="p8_platinum" type="checkbox">Закрыл 30/30 и получил платиновый трофей Life is Strange</label></li>
+</ul>
+</div>
+<div class="phaseDeep" id="deep-s8"><h3>Развернутое пояснение</h3><details class="pdfAcc"><summary><span>Если трофей не выпал</span><small>Диагностика</small></summary><div class="pdfAccBody"><p>Финальный хвост в Reunion почти всегда сводится к неверной классификации пропуска. Самая дорогая ошибка - чинить broken tracker через режим, который умеет писать только галерею. Поэтому перед любым повтором сначала определите тип трофея, а уже потом решайте, нужен ли вам быстрый cleanup или длинный Chapter Select.</p></div></details><details class="pdfAcc"><summary><span>Итог маршрута</span><small>Резюме</small></summary><div class="pdfAccBody"><p>Маршрут из трех документов складывается в одну понятную схему: первый проход забирает хороший таймлайн и весь нервный single-playthrough блок, затем идет точечный Collectible Cleanup, после чего вторая новая игра забирает мертвую ветку Хлои и катастрофические исходы.</p><p>Если следовать именно этой логике, Reunion превращается не в туманную кучу взаимоисключающих выборов, а в очень конкретную дорожную карту к платине.</p></div></details><details class="pdfAcc"><summary><span>Алгоритм проверки хвоста</span><small>Шаги</small></summary><div class="pdfAccBody"><p><b>Шаг 1:</b> назовите пропущенный трофей и отнесите его к одной из трех групп: галерея, мягкая сцена или single-playthrough трекер.</p><p><b>Шаг 2:</b> если это галерея - идите в Collectible Mode; если это локальная сцена - делайте точечный сейв; если это трекер - готовьтесь к Chapter Select и добегу до титров.</p><p><b>Шаг 3:</b> только после этой классификации начинайте что-то переигрывать. Это экономит больше времени, чем любой быстрый рандомный повтор главы.</p></div></details>
+</div>
+<div class="chk">
+<div class="chkhead"><span>Сводный чек-лист всех фаз</span><b id="done">0 / 16</b></div>
+<p class="chkHint">Закрывайте пункты по ходу прохождения. Когда все 16 отметок станут активными, мини-апп покажет финальную карточку ачивки.</p>
+<ul class="todo todo-all">
+<li><label><input data-k="p1_route" type="checkbox">Определил свой сценарий входа<small class="ph">Фаза 1</small></label></li>
+<li><label><input data-k="p1_basics" type="checkbox">Понимаю формат мини-аппа и правила чтения<small class="ph">Фаза 1</small></label></li>
+<li><label><input data-k="p2_collectible" type="checkbox">Определил тип ошибки перед переигровкой<small class="ph">Фаза 2</small></label></li>
+<li><label><input data-k="p2_branch" type="checkbox">Выбрал правильный инструмент отката<small class="ph">Фаза 2</small></label></li>
+<li><label><input data-k="p3_trackers" type="checkbox">Контролирую все single-playthrough трекеры<small class="ph">Фаза 3</small></label></li>
+<li><label><input data-k="p3_poetry" type="checkbox">Дослушал весь Open Mic<small class="ph">Фаза 3</small></label></li>
+<li><label><input data-k="p4_timeline" type="checkbox">Развел корневые таймлайны по разным забегам<small class="ph">Фаза 4</small></label></li>
+<li><label><input data-k="p4_finals" type="checkbox">Распределил финальные конфликтующие пары<small class="ph">Фаза 4</small></label></li>
+<li><label><input data-k="p5_blue" type="checkbox">Запустил good run под Blue Haired Girl<small class="ph">Фаза 5</small></label></li>
+<li><label><input data-k="p5_perfect" type="checkbox">Закрыл ideal run под Super Max<small class="ph">Фаза 5</small></label></li>
+<li><label><input data-k="p6_gallery" type="checkbox">Дочистил галерею Макс и Хлои<small class="ph">Фаза 6</small></label></li>
+<li><label><input data-k="p6_safe" type="checkbox">Закрыл мягкие сценовые кубки без риска для сюжета<small class="ph">Фаза 6</small></label></li>
+<li><label><input data-k="p7_dead" type="checkbox">Запустил disaster run под Dead Girl Walking<small class="ph">Фаза 7</small></label></li>
+<li><label><input data-k="p7_burn" type="checkbox">Забрал burn-ветку и Bottled It!<small class="ph">Фаза 7</small></label></li>
+<li><label><input data-k="p8_audit" type="checkbox">Провел финальный аудит хвостов<small class="ph">Фаза 8</small></label></li>
+<li><label><input data-k="p8_platinum" type="checkbox">Платина получена<small class="ph">Фаза 8</small></label></li>
+</ul>
+<button class="rst" id="rst" type="button">Сбросить отметки</button>
+</div>
+</div>
+</section>
+</article>
+</div>
+<div class="madeBy" aria-label="Copyright">
+  <span>&copy; 2026 Made by</span>
+  <span class="madeByBrand">
+    <img class="madeByMark" src="Logo.svg" alt="Logo">
+    <img class="madeByWord" src="ACHIEVER.svg" alt="ACHIEVER">
+  </span>
+</div>
+</main>
+<div id="winModal" aria-hidden="true">
+  <div class="winCard">
+    <h3>Платина закрыта!</h3>
+    <img id="winBadge" class="winBadge" src="Ачивка которая в конце дается.png" alt="Ачивка за прохождение платины Life is Strange: Reunion">
+    <small class="winNote">Ваша карточка прохождения</small>
+    <p>Все фазы маршрута отмечены. Значит, дорожная карта пройдена до конца и профиль дочищен без лишней путаницы.</p>
+    <div class="winActions">
+      <a id="winDownload" href="#" download="Ачивка которая в конце дается.png">Скачать ачивку</a>
+      <button id="winClose" type="button">Закрыть</button>
+    </div>
+  </div>
+</div>
+<script>
+(()=>{
+const tg=window.Telegram&&window.Telegram.WebApp?window.Telegram.WebApp:null;
+const setTheme=()=>{if(!tg)return;const p=tg.themeParams||{};if(p.bg_color)document.documentElement.style.setProperty('--tg-theme-bg-color',p.bg_color);if(p.text_color)document.documentElement.style.setProperty('--tg-theme-text-color',p.text_color);if(p.hint_color)document.documentElement.style.setProperty('--tg-theme-hint-color',p.hint_color);if(p.button_color)document.documentElement.style.setProperty('--tg-theme-button-color',p.button_color);if(p.button_text_color)document.documentElement.style.setProperty('--tg-theme-button-text-color',p.button_text_color);if(p.link_color)document.documentElement.style.setProperty('--tg-theme-link-color',p.link_color);if(p.secondary_bg_color)document.documentElement.style.setProperty('--tg-theme-secondary-bg-color',p.secondary_bg_color)};
+if(tg){tg.ready();tg.expand();setTheme();if(typeof tg.onEvent==='function')tg.onEvent('themeChanged',setTheme)}
+document.querySelectorAll('footer').forEach(el=>el.remove());
+const scenes=[...document.querySelectorAll('.scene')],hp=document.getElementById('hp'),ht=document.getElementById('ht'),ho=document.getElementById('ho'),hr=document.getElementById('hr'),hg=document.getElementById('hg'),hpr=document.getElementById('hpr'),hf=document.getElementById('hf'),hbar=document.getElementById('hbar'),rt=document.getElementById('rt'),ring=document.getElementById('ring'),hlist=document.getElementById('hlist'),timeline=document.getElementById('timeline'),mstep=document.getElementById('mstep'),mpercent=document.getElementById('mpercent'),mtitle=document.getElementById('mtitle'),mfill=document.getElementById('mfill'),mpeek=document.getElementById('mpeek'),hud=document.getElementById('hud'),winModal=document.getElementById('winModal'),winClose=document.getElementById('winClose'),winBadge=document.getElementById('winBadge'),winDownload=document.getElementById('winDownload');
+const btns=[];
+scenes.forEach((s,i)=>{s.dataset.i=i;const b=document.createElement('button');b.type='button';b.textContent=s.dataset.short||String(i+1).padStart(2,'0');b.onclick=()=>s.scrollIntoView({behavior:'smooth',block:'start'});timeline.appendChild(b);btns.push(b)});
+const trophyRu={
+  'Major Gumshoe':'Major Gumshoe',
+  'Sass Queen':'Sass Queen',
+  'Podcast Overload':'Podcast Overload',
+  'Soul of a Poet':'Soul of a Poet',
+  'Blue Haired Girl':'Blue Haired Girl',
+  'Dead Girl Walking':'Dead Girl Walking',
+  'Second Chance':'Second Chance',
+  'Bottled It!':'Bottled It!',
+  'Super Max':'Super Max',
+  'You\'ll All Burn':'You\'ll All Burn',
+  'Photo Wall':'Photo Wall',
+  'Drugstore Makeup':'Drugstore Makeup',
+  'All These Memories':'All These Memories',
+  'Bucket Challenge':'Bucket Challenge',
+  'Collectible Mode':'Collectible Mode',
+  'Chapter Select':'Chapter Select',
+  'Reload Checkpoint':'Reload Checkpoint'
+};
+let totalChecks=0,checklistPercent=0,phaseDone=0;
+const applyChecklistProgress=()=>{
+  const pct=Math.max(0,Math.min(100,checklistPercent));
+  hf.style.width=pct+'%';
+  hpr.textContent=pct+'%';
+  if(mpercent)mpercent.textContent=pct+'%';
+  const ringPct=totalChecks?phaseDone/totalChecks:0;
+  ring.classList.toggle('empty',ringPct<=0);
+  ring.style.setProperty('--a',(ringPct*360)+'deg');
+  rt.textContent=(phaseDone?phaseDone:0)+' / '+totalChecks;
+  if(mfill)mfill.style.width=pct+'%';
+  hbar.classList.toggle('empty',pct<=0);
+};
+const list=(raw)=>{hlist.innerHTML='';(raw||'').split('|').map(v=>v.trim()).filter(Boolean).forEach(v=>{const li=document.createElement('li');li.textContent=trophyRu[v]||v;hlist.appendChild(li)})};
+const set=(i)=>{const s=scenes[i];if(!s)return;scenes.forEach((x,n)=>x.classList.toggle('active',n===i));btns.forEach((x,n)=>x.classList.toggle('on',n===i));hp.textContent=s.dataset.phase||'';ht.textContent=s.dataset.title||'';ho.textContent=s.dataset.obj||'';hr.textContent=s.dataset.risk||'';hg.textContent=s.dataset.gain||'';if(mstep)mstep.textContent=s.dataset.phase||'';if(mtitle)mtitle.textContent=s.dataset.title||'';list(s.dataset.list)};
+const mountAccordionCollapseButtons=()=>{document.querySelectorAll('.pdfAcc').forEach(acc=>{const body=acc.querySelector('.pdfAccBody');if(!body||body.querySelector('.accCollapse'))return;const wrap=document.createElement('div');wrap.className='accCollapseWrap';const btn=document.createElement('button');btn.type='button';btn.className='accCollapse';btn.textContent='Свернуть';btn.addEventListener('click',()=>{acc.open=false;const summary=acc.querySelector('summary');if(summary)summary.scrollIntoView({behavior:'smooth',block:'nearest'})});wrap.appendChild(btn);body.appendChild(wrap)})};
+let activeScene=0,raf=0;
+const syncMobilePeek=()=>{if(!mpeek||!hud)return;if(window.innerWidth>980){mpeek.classList.remove('show');return;}const y=window.scrollY||document.documentElement.scrollTop||document.body.scrollTop||0;const threshold=hud.offsetTop+24;const show=y>threshold;mpeek.classList.toggle('show',show)};
+const resolveActiveScene=()=>{const anchor=window.innerHeight*.42;let fallback=0,min=Infinity;for(let i=0;i<scenes.length;i++){const r=scenes[i].getBoundingClientRect();if(r.top<=anchor&&r.bottom>anchor)return i;const d=Math.abs(r.top-anchor);if(d<min){min=d;fallback=i}}return fallback};
+const updateActiveByScroll=()=>{const idx=resolveActiveScene();if(idx!==activeScene){activeScene=idx;set(idx)}};
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.intersectionRatio>.18)e.target.classList.add('show')})},{threshold:[.2,.55,.8],rootMargin:'-8% 0px -30% 0px'});
+scenes.forEach(s=>io.observe(s));
+const onScroll=()=>{syncMobilePeek();if(raf)return;raf=requestAnimationFrame(()=>{raf=0;updateActiveByScroll()})};
+window.addEventListener('scroll',onScroll,{passive:true});
+window.addEventListener('resize',onScroll,{passive:true});
+mountAccordionCollapseButtons();
+set(0);
+onScroll();
+
+const key='lis_reunion_miniapp_checklist_v1',inputs=[...document.querySelectorAll('[data-k]')],done=document.getElementById('done'),rst=document.getElementById('rst');
+const groups=inputs.reduce((m,i)=>{const k=i.dataset.k;if(!m[k])m[k]=[];m[k].push(i);return m},{});
+const keys=Object.keys(groups);
+totalChecks=keys.length;
+const refreshChecklistProgress=()=>{
+  phaseDone=keys.filter(k=>groups[k][0]&&groups[k][0].checked).length;
+  checklistPercent=keys.length?Math.round((phaseDone/keys.length)*100):0;
+  applyChecklistProgress();
+};
+const draw=()=>{if(!done)return;const checked=keys.filter(k=>groups[k][0]&&groups[k][0].checked).length;done.textContent=checked+' / '+keys.length};
+const allDone=()=>keys.length>0&&keys.every(k=>groups[k].every(i=>i.checked));
+const openWinModal=()=>{if(!winModal)return;winModal.classList.add('show');winModal.setAttribute('aria-hidden','false');if(tg&&tg.HapticFeedback&&tg.HapticFeedback.notificationOccurred)tg.HapticFeedback.notificationOccurred('success')};
+const closeWinModal=()=>{if(!winModal)return;winModal.classList.remove('show');winModal.setAttribute('aria-hidden','true')};
+let wasAllDone=false;
+const save=()=>{const d={};keys.forEach(k=>d[k]=!!(groups[k][0]&&groups[k][0].checked));localStorage.setItem(key,JSON.stringify(d));refreshChecklistProgress();draw();const complete=allDone();if(complete&&!wasAllDone)openWinModal();if(!complete)closeWinModal();wasAllDone=complete};
+try{const raw=localStorage.getItem(key);if(raw){const d=JSON.parse(raw);keys.forEach(k=>{const v=!!d[k];groups[k].forEach(i=>i.checked=v)})}}catch(e){}
+refreshChecklistProgress();
+draw();
+wasAllDone=allDone();
+inputs.forEach(i=>i.addEventListener('change',()=>{const k=i.dataset.k;const v=i.checked;(groups[k]||[]).forEach(x=>x.checked=v);save()}));
+if(rst)rst.addEventListener('click',()=>{keys.forEach(k=>(groups[k]||[]).forEach(i=>i.checked=false));save()});
+
+const badgeFileName='Ачивка которая в конце дается.png';
+const badgeDownloadPath='Ачивка которая в конце дается.png';
+const tgPlatform=String((tg&&tg.platform)||'').toLowerCase();
+const isMobileTelegram=tgPlatform==='android'||tgPlatform==='ios'||/android|iphone|ipad|ipod/i.test(navigator.userAgent);
+const toAbsUrl=u=>{try{return new URL(u,window.location.href).href}catch(e){return u}};
+const triggerBlobDownload=async(url,name)=>{
+  const r=await fetch(url,{cache:'no-store'});
+  if(!r.ok)throw new Error('download failed');
+  const blob=await r.blob();
+  const blobUrl=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=blobUrl;
+  a.download=name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(blobUrl),1200);
+};
+if(winBadge)winBadge.src=badgeDownloadPath;
+if(winDownload){
+  winDownload.setAttribute('download',badgeFileName);
+  winDownload.addEventListener('click',async e=>{
+    e.preventDefault();
+    const absUrl=toAbsUrl(badgeDownloadPath);
+    try{
+      if(isMobileTelegram&&tg&&typeof tg.openLink==='function'){tg.openLink(absUrl,{try_instant_view:false});return}
+      await triggerBlobDownload(absUrl,badgeFileName);
+    }catch(err){
+      const a=document.createElement('a');
+      a.href=absUrl;
+      a.download=badgeFileName;
+      a.target='_blank';
+      a.rel='noopener';
+      a.click();
+    }
+  });
+}
+if(winClose)winClose.addEventListener('click',closeWinModal);
+if(winModal)winModal.addEventListener('click',e=>{if(e.target===winModal)closeWinModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeWinModal()});
+
+if(tg&&tg.MainButton){tg.MainButton.setText('Наверх');tg.MainButton.onClick(()=>window.scrollTo({top:0,behavior:'smooth'}));const sync=()=>window.scrollY>window.innerHeight*.8?tg.MainButton.show():tg.MainButton.hide();window.addEventListener('scroll',sync,{passive:true});sync()}
+})();
+</script>
+</body>
+</html>
